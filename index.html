@@ -2,41 +2,68 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop</title>
+    <title>Block Out!</title>
     <style>
-        * { padding: 0; margin: 0; }
-        canvas { background: #eee; display: block; margin: 0 auto; }
+        *
+        {
+            padding: 0;
+            margin: 0;
+            background: #ddd;
+        }
+
+        canvas
+        {
+            background: #eee;
+            display: block;
+            margin: 2% auto;
+            width: 75%;
+            height: 50%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            canvas
+            {
+                margin: 0% auto;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<canvas id="canvas"></canvas>
 
 <script>
-    var canvas = document.getElementById("myCanvas");
+    var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    canvas.width = 3*window.innerWidth/4;
+    canvas.height = canvas.width/1.5;
+
+    var scaleFactor = Math.max(1, canvas.width/400);
 
     var score = 0;
     var lives = 3;
 
-    var ballRadius = 10;
+    var ballRadius = 10 * scaleFactor;
     var ballX = canvas.width/2;
     var ballY = canvas.height-30;
-    var dx = 2;
-    var dy = -2;
+    var dx = 2 * scaleFactor;
+    var dy = -2 * scaleFactor;
 
-    var paddleHeight = 10;
-    var paddleWidth = 75;
+    var paddleHeight = 10 * scaleFactor;
+    var paddleWidth = 75 * scaleFactor;
     var paddleX = (canvas.width-paddleWidth)/2;
-    var paddleDx = 7;
+    var paddleDx = 7 * scaleFactor;
 
     var brickRowCount = 3;
     var brickColumnCount = 5;
-    var brickWidth = 75;
-    var brickHeight = 20;
-    var brickPadding = 10;
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
+    var brickPadding = 10;
+    var brickWidth = ((canvas.width - brickOffsetLeft*2) / (brickColumnCount)) - brickPadding;
+    var brickHeight = brickWidth/3.5;
+
+    console.log(brickWidth);
 
     var bricks = [];
     for(c = 0; c < brickColumnCount; c++) {
@@ -115,8 +142,8 @@
                         }
                     }
                     if(win){
-                        alert("YOU WIN, CONGRATULATIONS!");
-                        document.location.reload();
+//                        alert("YOU WIN, CONGRATULATIONS!");
+//                        document.location.reload();
                     }
                 }
             }
@@ -169,8 +196,8 @@
                 dy = -dy;
             } else {
                 if (lives == 0) {
-                    alert("GAME OVER");
-                    document.location.reload();
+//                    alert("GAME OVER");
+//                    document.location.reload();
                 } else {
                     lives--;
 
